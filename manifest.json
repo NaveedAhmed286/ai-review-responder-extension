@@ -3,6 +3,7 @@
   "name": "AI Review Responder",
   "version": "1.0.0",
   "description": "Generate AI responses to reviews on any platform with one click",
+  "homepage_url": "https://responder.aiinfra.work",
   "icons": {
     "16": "icons/icon16.png",
     "48": "icons/icon48.png",
