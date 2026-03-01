@@ -21,8 +21,7 @@
     "https://*.twitter.com/*",
     "https://*.instagram.com/*",
     "https://*.yelp.com/*",
-    "https://*.tripadvisor.com/*",
-    "https://responder.aiinfra.work/*"
+    "https://*.tripadvisor.com/*"
   ],
   "action": {
     "default_popup": "popup.html",
@@ -41,8 +40,7 @@
         "https://*.twitter.com/*",
         "https://*.instagram.com/*",
         "https://*.yelp.com/*",
-        "https://*.tripadvisor.com/*",
-        "<all_urls>"
+        "https://*.tripadvisor.com/*"
       ],
       "js": [
         "utils.js",
