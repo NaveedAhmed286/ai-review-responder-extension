@@ -1,86 +1,158 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles/popup.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles/popup.css">
+  <style>
+    /* Additional inline styles for Amazon support */
+    .amazon-badge {
+      background: #FF9900 !important;
+    }
+    .rating-stars {
+      color: #FF9900;
+      font-size: 14px;
+      margin-bottom: 5px;
+    }
+    .review-meta {
+      font-size: 12px;
+      color: #666;
+      margin-bottom: 8px;
+      padding-bottom: 5px;
+      border-bottom: 1px dashed #eee;
+    }
+    .pending-badge {
+      background: #ff6b35;
+      color: white;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 10px;
+      margin-left: 8px;
+    }
+    .tone-selector {
+      margin: 15px 0;
+    }
+    .tone-label {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-weight: 500;
+    }
+    .tone-label span {
+      font-size: 14px;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Header -->
-        <div class="header">
-            <img src="icons/icon48.png" alt="Logo" class="logo">
-            <h1>AI Review Responder</h1>
-        </div>
-        
-        <!-- License Section (if not logged in) -->
-        <div id="licenseSection" class="section">
-            <p>Enter your license key to get started:</p>
-            <input type="text" id="licenseKey" placeholder="xxxx-xxxx-xxxx-xxxx" class="input-field">
-            <button id="saveLicenseBtn" class="btn primary">Save License</button>
-            <p class="small">Don't have a license? <a href="https://responder.aiinfra.work/purchase" target="_blank">Purchase here</a></p>
-        </div>
-        
-        <!-- Main Section (when logged in) -->
-        <div id="mainSection" class="section" style="display: none;">
-            <div class="status-card">
-                <span id="currentPlatform" class="platform-badge">Loading...</span>
-                <span id="licenseStatus" class="license-badge">Active</span>
-            </div>
-            
-            <div class="review-card" id="reviewCard">
-                <h3>Detected Review:</h3>
-                <div id="reviewText" class="review-text">Loading review...</div>
-                <button id="refreshReviewBtn" class="btn secondary small">
-                    ↻ Refresh
-                </button>
-            </div>
-            
-            <div class="options-card">
-                <label for="toneSelect">Response Tone:</label>
-                <select id="toneSelect" class="select-field">
-                    <option value="professional">Professional</option>
-                    <option value="friendly">Friendly</option>
-                    <option value="enthusiastic">Enthusiastic</option>
-                    <option value="formal">Formal</option>
-                </select>
-            </div>
-            
-            <button id="generateBtn" class="btn primary large">
-                ✨ Generate Response
-            </button>
-            
-            <div id="responseSection" style="display: none;">
-                <h3>AI Response:</h3>
-                <textarea id="responseText" class="response-textarea" rows="4" readonly></textarea>
-                
-                <div class="button-group">
-                    <button id="copyBtn" class="btn secondary">
-                        📋 Copy
-                    </button>
-                    <button id="fillBtn" class="btn primary">
-                        📝 Fill Reply Box
-                    </button>
-                    <button id="regenerateBtn" class="btn secondary">
-                        🔄 Regenerate
-                    </button>
-                </div>
-            </div>
-            
-            <div class="usage-card">
-                <p>Usage this month: <span id="usageCount">-</span>/<span id="usageLimit">-</span></p>
-                <div class="progress-bar">
-                    <div id="usageProgress" class="progress-fill" style="width: 0%"></div>
-                </div>
-            </div>
-            
-            <button id="logoutBtn" class="btn text small">Sign Out</button>
-        </div>
-        
-        <!-- Status Messages -->
-        <div id="statusMessage" class="status-message"></div>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <img src="icons/icon48.png" alt="Logo" class="logo">
+      <h1>AI Review Responder</h1>
     </div>
-    
-    <script src="popup.js"></script>
+
+    <!-- License Section (if not logged in) -->
+    <div id="licenseSection" class="section">
+      <p>Enter your license key to get started:</p>
+      <input type="text" id="licenseKey" placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" class="input-field">
+      <div class="info-text small">Example: 12345678-1234-1234-1234-123456789012</div>
+      <button id="saveLicenseBtn" class="btn primary">Save License</button>
+      <p class="small">Don't have a license? <a href="https://responder.aiinfra.work/purchase" target="_blank">Purchase here</a></p>
+    </div>
+
+    <!-- Main Section (when logged in) -->
+    <div id="mainSection" class="section" style="display: none;">
+      
+      <!-- Platform & Status Card -->
+      <div class="status-card">
+        <span id="currentPlatform" class="platform-badge">Loading...</span>
+        <span id="licenseStatus" class="license-badge">Active</span>
+      </div>
+
+      <!-- Pending Review Indicator (for Amazon button clicks) -->
+      <div id="pendingIndicator" style="display: none;" class="pending-badge">
+        ⏳ Review ready to generate
+      </div>
+
+      <!-- Review Card -->
+      <div class="review-card" id="reviewCard">
+        <h3>Detected Review:</h3>
+        <div id="reviewMeta" class="review-meta"></div>
+        <div id="reviewRating" class="rating-stars"></div>
+        <div id="reviewText" class="review-text">Loading review...</div>
+        <button id="refreshReviewBtn" class="btn secondary small">
+          ↻ Refresh
+        </button>
+      </div>
+
+      <!-- Options Card -->
+      <div class="options-card">
+        <div class="tone-label">
+          <span>🎭</span>
+          <label for="toneSelect">Response Tone:</label>
+        </div>
+        <select id="toneSelect" class="select-field">
+          <option value="professional">💼 Professional (Recommended)</option>
+          <option value="friendly">😊 Friendly & Warm</option>
+          <option value="enthusiastic">🎉 Enthusiastic & Energetic</option>
+          <option value="formal">📝 Formal & Business</option>
+        </select>
+        
+        <!-- Platform-specific hint (hidden by default) -->
+        <div id="platformHint" class="info-text small" style="margin-top: 8px; display: none;"></div>
+      </div>
+
+      <!-- Generate Button -->
+      <button id="generateBtn" class="btn primary large">
+        ✨ Generate Response
+      </button>
+
+      <!-- Response Section -->
+      <div id="responseSection" style="display: none;">
+        <h3>AI Response:</h3>
+        <textarea id="responseText" class="response-textarea" rows="4" readonly></textarea>
+        
+        <!-- Button Group -->
+        <div class="button-group">
+          <button id="copyBtn" class="btn secondary">
+            📋 Copy
+          </button>
+          <button id="fillBtn" class="btn primary">
+            📩 Fill Reply Box
+          </button>
+          <button id="regenerateBtn" class="btn secondary">
+            🔄 Regenerate
+          </button>
+        </div>
+        
+        <!-- Amazon-specific tip -->
+        <div id="amazonTip" class="info-text small" style="margin-top: 8px; display: none; text-align: center;">
+          💡 For Amazon: Click "Fill Reply Box" then the orange "Post" button
+        </div>
+      </div>
+
+      <!-- Usage Card -->
+      <div class="usage-card">
+        <p>Usage this month: <span id="usageCount">-</span>/<span id="usageLimit">-</span></p>
+        <div class="progress-bar">
+          <div id="usageProgress" class="progress-fill" style="width: 0%"></div>
+        </div>
+        <div id="usageWarning" class="warning-text small" style="display: none; color: #ff6b35; margin-top: 5px;">
+          ⚠️ Close to limit!
+        </div>
+      </div>
+
+      <!-- Footer Buttons -->
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 15px;">
+        <button id="settingsBtn" class="btn text small">⚙️ Settings</button>
+        <button id="logoutBtn" class="btn text small danger">Sign Out</button>
+      </div>
+    </div>
+
+    <!-- Status Messages -->
+    <div id="statusMessage" class="status-message"></div>
+  </div>
+
+  <script src="popup.js"></script>
 </body>
 </html>

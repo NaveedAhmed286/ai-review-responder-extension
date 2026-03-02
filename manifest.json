@@ -21,7 +21,17 @@
     "https://*.twitter.com/*",
     "https://*.instagram.com/*",
     "https://*.yelp.com/*",
-    "https://*.tripadvisor.com/*"
+    "https://*.tripadvisor.com/*",
+    "https://*.amazon.com/*",
+    "https://*.amazon.co.uk/*",
+    "https://*.amazon.de/*",
+    "https://*.amazon.fr/*",
+    "https://*.amazon.co.jp/*",
+    "https://*.amazon.in/*",
+    "https://*.amazon.ca/*",
+    "https://*.amazon.com.mx/*",
+    "https://*.amazon.com.au/*",
+    "https://*.amazon.com.br/*"
   ],
   "action": {
     "default_popup": "popup.html",
@@ -40,7 +50,17 @@
         "https://*.twitter.com/*",
         "https://*.instagram.com/*",
         "https://*.yelp.com/*",
-        "https://*.tripadvisor.com/*"
+        "https://*.tripadvisor.com/*",
+        "https://*.amazon.com/*",
+        "https://*.amazon.co.uk/*",
+        "https://*.amazon.de/*",
+        "https://*.amazon.fr/*",
+        "https://*.amazon.co.jp/*",
+        "https://*.amazon.in/*",
+        "https://*.amazon.ca/*",
+        "https://*.amazon.com.mx/*",
+        "https://*.amazon.com.au/*",
+        "https://*.amazon.com.br/*"
       ],
       "js": [
         "utils.js",
@@ -49,6 +69,8 @@
         "platforms/twitter.js",
         "platforms/instagram.js",
         "platforms/yelp.js",
+        "platforms/tripadvisor.js",
+        "platforms/amazon.js",
         "content.js"
       ],
       "css": ["styles/popup.css"]
@@ -58,6 +80,10 @@
     "service_worker": "background.js"
   },
   "options_page": "options.html",
+  "web_accessible_resources": [{
+    "resources": ["platforms/amazon.js"],
+    "matches": ["https://*.amazon.com/*", "https://*.amazon.*/*"]
+  }],
   "commands": {
     "_execute_action": {
       "suggested_key": {

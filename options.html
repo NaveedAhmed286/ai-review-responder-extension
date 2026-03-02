@@ -1,137 +1,480 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>AI Review Responder - Settings</title>
-    <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            max-width: 600px;
-            margin: 40px auto;
-            padding: 20px;
-            background: #f5f5f5;
-        }
-        
-        .container {
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-        }
-        
-        h1 {
-            color: #1a1a1a;
-            margin-bottom: 30px;
-        }
-        
-        .section {
-            margin-bottom: 30px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .section h2 {
-            font-size: 18px;
-            color: #ff6b35;
-            margin-bottom: 15px;
-        }
-        
-        .setting {
-            margin-bottom: 15px;
-        }
-        
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: 500;
-        }
-        
-        input[type="text"], select {
-            width: 100%;
-            padding: 10px;
-            border: 2px solid #e0e0e0;
-            border-radius: 6px;
-            font-size: 14px;
-        }
-        
-        .btn {
-            background: #ff6b35;
-            color: white;
-            padding: 12px 24px;
-            border: none;
-            border-radius: 6px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-        
-        .btn:hover {
-            background: #e54b1f;
-        }
-        
-        .status {
-            margin-top: 20px;
-            padding: 10px;
-            border-radius: 4px;
-            display: none;
-        }
-        
-        .status.success {
-            background: #4caf50;
-            color: white;
-            display: block;
-        }
-        
-        .status.error {
-            background: #f44336;
-            color: white;
-            display: block;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>AI Review Responder - Settings</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      max-width: 700px;
+      margin: 40px auto;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+    
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+    }
+    
+    h1 {
+      color: #1a1a1a;
+      margin-bottom: 30px;
+      font-size: 28px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    h1:before {
+      content: "⚙️";
+      font-size: 32px;
+    }
+    
+    .section {
+      margin-bottom: 35px;
+      padding-bottom: 25px;
+      border-bottom: 2px solid #f0f0f0;
+    }
+    
+    .section:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+    
+    .section h2 {
+      font-size: 20px;
+      color: #FF9900;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .section h2 i {
+      font-style: normal;
+      font-size: 24px;
+    }
+    
+    .setting {
+      margin-bottom: 20px;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #444;
+      font-size: 14px;
+    }
+    
+    input[type="text"], select {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 14px;
+      transition: border-color 0.3s;
+      box-sizing: border-box;
+    }
+    
+    input[type="text"]:focus, select:focus {
+      border-color: #FF9900;
+      outline: none;
+    }
+    
+    input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      margin-right: 10px;
+      cursor: pointer;
+    }
+    
+    .checkbox-label {
+      display: flex;
+      align-items: center;
+      font-weight: normal;
+      cursor: pointer;
+    }
+    
+    .btn {
+      background: #FF9900;
+      color: white;
+      padding: 12px 28px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 2px 8px rgba(255, 153, 0, 0.3);
+    }
+    
+    .btn:hover {
+      background: #F08800;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(255, 153, 0, 0.4);
+    }
+    
+    .btn.secondary {
+      background: #6c757d;
+      box-shadow: 0 2px 8px rgba(108, 117, 125, 0.3);
+    }
+    
+    .btn.secondary:hover {
+      background: #5a6268;
+    }
+    
+    .btn.small {
+      padding: 8px 16px;
+      font-size: 14px;
+    }
+    
+    .status {
+      margin-top: 25px;
+      padding: 15px;
+      border-radius: 8px;
+      display: none;
+      font-weight: 500;
+      text-align: center;
+    }
+    
+    .status.success {
+      background: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+      display: block;
+    }
+    
+    .status.error {
+      background: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+      display: block;
+    }
+    
+    .status.info {
+      background: #d1ecf1;
+      color: #0c5460;
+      border: 1px solid #bee5eb;
+      display: block;
+    }
+    
+    .info-text {
+      font-size: 13px;
+      color: #666;
+      margin-top: 5px;
+      font-style: italic;
+    }
+    
+    .platform-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      margin: 15px 0 20px;
+    }
+    
+    .platform-item {
+      background: #f8f9fa;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #e9ecef;
+      transition: all 0.2s;
+    }
+    
+    .platform-item:hover {
+      border-color: #FF9900;
+      background: #fff;
+    }
+    
+    .platform-item label {
+      margin: 0;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+    }
+    
+    .platform-badge {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 600;
+      margin-left: 8px;
+      color: white;
+    }
+    
+    .badge-amazon { background: #FF9900; }
+    .badge-facebook { background: #1877f2; }
+    .badge-google { background: #4285f4; }
+    .badge-twitter { background: #1d9bf0; }
+    .badge-instagram { background: #e4405f; }
+    .badge-yelp { background: #d32323; }
+    .badge-tripadvisor { background: #00af87; }
+    
+    .usage-stats {
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 10px;
+      margin-top: 15px;
+    }
+    
+    .stat-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 15px;
+      padding-bottom: 10px;
+      border-bottom: 1px dashed #dee2e6;
+    }
+    
+    .stat-label {
+      font-weight: 600;
+      color: #495057;
+    }
+    
+    .stat-value {
+      font-size: 18px;
+      font-weight: 700;
+      color: #FF9900;
+    }
+    
+    .progress-bar {
+      width: 100%;
+      height: 10px;
+      background: #e9ecef;
+      border-radius: 5px;
+      margin: 15px 0;
+      overflow: hidden;
+    }
+    
+    .progress-fill {
+      height: 100%;
+      background: #FF9900;
+      border-radius: 5px;
+      transition: width 0.3s;
+    }
+    
+    .button-group {
+      display: flex;
+      gap: 12px;
+      margin-top: 15px;
+      flex-wrap: wrap;
+    }
+    
+    hr {
+      border: none;
+      border-top: 2px solid #f0f0f0;
+      margin: 25px 0;
+    }
+    
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 25px;
+      color: #6c757d;
+    }
+    
+    .footer-links a {
+      color: #FF9900;
+      text-decoration: none;
+    }
+    
+    .footer-links a:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>⚙️ AI Review Responder Settings</h1>
-        
-        <div class="section">
-            <h2>License</h2>
-            <div class="setting">
-                <label>License Key:</label>
-                <input type="text" id="licenseKey" placeholder="Enter your license key">
-            </div>
-            <button id="saveLicense" class="btn">Save License</button>
-        </div>
-        
-        <div class="section">
-            <h2>Default Settings</h2>
-            <div class="setting">
-                <label>Default Response Tone:</label>
-                <select id="defaultTone">
-                    <option value="professional">Professional</option>
-                    <option value="friendly">Friendly</option>
-                    <option value="enthusiastic">Enthusiastic</option>
-                    <option value="formal">Formal</option>
-                </select>
-            </div>
-            
-            <div class="setting">
-                <label>Auto-fill reply box after generation:</label>
-                <select id="autoFill">
-                    <option value="yes">Yes</option>
-                    <option value="no">No (manual fill)</option>
-                </select>
-            </div>
-        </div>
-        
-        <div class="section">
-            <h2>About</h2>
-            <p>Version: 1.0.0</p>
-            <p>Website: <a href="https://responder.aiinfra.work" target="_blank">responder.aiinfra.work</a></p>
-            <p>Support: <a href="mailto:hi@aiinfra.work">hi@aiinfra.work</a></p>
-        </div>
-        
-        <div id="status" class="status"></div>
+  <div class="container">
+    <h1>AI Review Responder Settings</h1>
+    
+    <!-- License Section -->
+    <div class="section">
+      <h2><i>🔑</i> License</h2>
+      <div class="setting">
+        <label>License Key:</label>
+        <input type="text" id="licenseKey" placeholder="Enter your license key (e.g., 12345678-1234-1234-1234-123456789012)">
+        <div class="info-text">Your license key determines your monthly response limit</div>
+      </div>
+      <div class="button-group">
+        <button id="saveLicense" class="btn">Save License</button>
+        <button id="verifyLicense" class="btn secondary">Verify License</button>
+      </div>
     </div>
     
-    <script src="options.js"></script>
+    <!-- Usage Statistics Section (New) -->
+    <div class="section">
+      <h2><i>📊</i> Usage Statistics</h2>
+      <div class="usage-stats" id="usageSection" style="display: none;">
+        <div class="stat-row">
+          <span class="stat-label">Responses Used:</span>
+          <span class="stat-value"><span id="usageUsed">0</span> / <span id="usageLimit">100</span></span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" id="usageProgress" style="width: 0%"></div>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">Reset Date:</span>
+          <span class="stat-value" id="resetDate">1st of every month</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">License Type:</span>
+          <span class="stat-value" id="licenseTier">Basic</span>
+        </div>
+        <button id="refreshUsage" class="btn small">↻ Refresh</button>
+      </div>
+      <div id="noLicenseMessage" style="color: #6c757d; font-style: italic; padding: 15px; text-align: center;">
+        Enter a license key to see usage statistics
+      </div>
+    </div>
+    
+    <!-- Default Settings Section -->
+    <div class="section">
+      <h2><i>⚙️</i> Default Settings</h2>
+      <div class="setting">
+        <label>Default Response Tone:</label>
+        <select id="defaultTone">
+          <option value="professional">Professional (Recommended)</option>
+          <option value="friendly">Friendly & Warm</option>
+          <option value="enthusiastic">Enthusiastic & Energetic</option>
+          <option value="formal">Formal & Business</option>
+        </select>
+      </div>
+      
+      <div class="setting">
+        <label>Auto-fill reply box after generation:</label>
+        <select id="autoFill">
+          <option value="yes">Yes - Automatically fill the reply box</option>
+          <option value="no">No - Let me click "Fill Reply" manually</option>
+        </select>
+      </div>
+    </div>
+    
+    <!-- Platform Preferences Section (New) -->
+    <div class="section">
+      <h2><i>🌐</i> Platform Preferences</h2>
+      <p style="color: #666; margin-bottom: 15px;">Select which platforms to enable the extension on:</p>
+      
+      <div class="platform-grid">
+        <div class="platform-item">
+          <label class="checkbox-label">
+            <input type="checkbox" id="platformAmazon" value="amazon" checked>
+            Amazon
+            <span class="platform-badge badge-amazon">AMZ</span>
+          </label>
+        </div>
+        
+        <div class="platform-item">
+          <label class="checkbox-label">
+            <input type="checkbox" id="platformFacebook" value="facebook" checked>
+            Facebook
+            <span class="platform-badge badge-facebook">FB</span>
+          </label>
+        </div>
+        
+        <div class="platform-item">
+          <label class="checkbox-label">
+            <input type="checkbox" id="platformGoogle" value="google" checked>
+            Google
+            <span class="platform-badge badge-google">GGL</span>
+          </label>
+        </div>
+        
+        <div class="platform-item">
+          <label class="checkbox-label">
+            <input type="checkbox" id="platformTwitter" value="twitter" checked>
+            Twitter/X
+            <span class="platform-badge badge-twitter">TW</span>
+          </label>
+        </div>
+        
+        <div class="platform-item">
+          <label class="checkbox-label">
+            <input type="checkbox" id="platformInstagram" value="instagram" checked>
+            Instagram
+            <span class="platform-badge badge-instagram">IG</span>
+          </label>
+        </div>
+        
+        <div class="platform-item">
+          <label class="checkbox-label">
+            <input type="checkbox" id="platformYelp" value="yelp" checked>
+            Yelp
+            <span class="platform-badge badge-yelp">YLP</span>
+          </label>
+        </div>
+        
+        <div class="platform-item">
+          <label class="checkbox-label">
+            <input type="checkbox" id="platformTripadvisor" value="tripadvisor" checked>
+            TripAdvisor
+            <span class="platform-badge badge-tripadvisor">TRIP</span>
+          </label>
+        </div>
+      </div>
+      
+      <div class="button-group">
+        <button id="savePlatforms" class="btn">Save Platform Preferences</button>
+        <button id="selectAllPlatforms" class="btn secondary small">Select All</button>
+        <button id="deselectAllPlatforms" class="btn secondary small">Deselect All</button>
+      </div>
+    </div>
+    
+    <!-- Advanced Settings Section (New) -->
+    <div class="section">
+      <h2><i>🚀</i> Advanced Settings</h2>
+      
+      <div class="setting">
+        <label>Show platform badges on toolbar:</label>
+        <select id="showBadges">
+          <option value="yes" selected>Yes - Show AMZ, FB, etc.</option>
+          <option value="no">No - Hide platform badges</option>
+        </select>
+      </div>
+      
+      <div class="setting">
+        <label class="checkbox-label">
+          <input type="checkbox" id="autoDetectReviews">
+          Auto-detect reviews when page loads (no need to click)
+        </label>
+      </div>
+      
+      <div class="setting">
+        <label class="checkbox-label">
+          <input type="checkbox" id="enableDebugMode">
+          Enable debug mode (console logs)
+        </label>
+      </div>
+    </div>
+    
+    <!-- About Section -->
+    <div class="section">
+      <h2><i>ℹ️</i> About</h2>
+      <p><strong>Version:</strong> 1.0.0 (with Amazon support)</p>
+      <p><strong>Supported Platforms:</strong> Amazon, Facebook, Google, Twitter/X, Instagram, Yelp, TripAdvisor</p>
+      <p><strong>Website:</strong> <a href="https://responder.aiinfra.work" target="_blank">responder.aiinfra.work</a></p>
+      <p><strong>Support:</strong> <a href="mailto:hi@aiinfra.work">hi@aiinfra.work</a></p>
+      <p><strong>Extension ID:</strong> <code id="extensionId">nkfmfjjgpjdgkcibeoohlhpkpjindike</code></p>
+    </div>
+    
+    <!-- Status Message -->
+    <div id="status" class="status"></div>
+    
+    <hr>
+    
+    <!-- Footer Links -->
+    <div class="footer-links">
+      <a href="https://responder.aiinfra.work/privacy" target="_blank">Privacy Policy</a>
+      <a href="https://responder.aiinfra.work/terms" target="_blank">Terms of Service</a>
+      <a href="#" id="clearData">Clear Local Data</a>
+    </div>
+  </div>
+  
+  <script src="options.js"></script>
 </body>
 </html>
