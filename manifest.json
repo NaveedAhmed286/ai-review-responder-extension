@@ -82,7 +82,18 @@
   "options_page": "options.html",
   "web_accessible_resources": [{
     "resources": ["platforms/amazon.js"],
-    "matches": ["https://*.amazon.com/*", "https://*.amazon.*/*"]
+    "matches": [
+      "https://*.amazon.com/*",
+      "https://*.amazon.co.uk/*",
+      "https://*.amazon.de/*",
+      "https://*.amazon.fr/*",
+      "https://*.amazon.co.jp/*",
+      "https://*.amazon.in/*",
+      "https://*.amazon.ca/*",
+      "https://*.amazon.com.mx/*",
+      "https://*.amazon.com.au/*",
+      "https://*.amazon.com.br/*"
+    ]
   }],
   "commands": {
     "_execute_action": {
