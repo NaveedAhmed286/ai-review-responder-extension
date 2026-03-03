@@ -185,35 +185,40 @@ function setupEventListeners() {
     });
   });
 
-  // Copy button
-  document.getElementById('copyBtn').addEventListener('click', function() {
+ // Copy button
+document.getElementById('copyBtn').addEventListener('click', function() {
     const response = document.getElementById('responseText').value;
     navigator.clipboard.writeText(response);
     showStatus('Copied to clipboard!', 'success');
-  });
+});
 
-  // Refresh review
-  document.getElementById('refreshReviewBtn').addEventListener('click', function() {
+// Refresh review
+document.getElementById('refreshReviewBtn').addEventListener('click', function() {
     getReviewFromPage();
-  });
+});
 
-  // Regenerate
-  document.getElementById('regenerateBtn').addEventListener('click', function() {
+// Regenerate
+document.getElementById('regenerateBtn').addEventListener('click', function() {
     document.getElementById('generateBtn').click();
-  });
+});
 
-  // Logout
-  document.getElementById('logoutBtn').addEventListener('click', async function() {
+// 🔧 SETTINGS BUTTON - ADD THIS BLOCK HERE
+document.getElementById('settingsBtn').addEventListener('click', function() {
+    chrome.runtime.openOptionsPage();
+});
+
+// Logout
+document.getElementById('logoutBtn').addEventListener('click', async function() {
     await saveToStorage('license_key', null);
     showLicenseSection();
-  });
+});
 
-  // Enter key in license field
-  document.getElementById('licenseKey').addEventListener('keypress', function(e) {
+// Enter key in license field
+document.getElementById('licenseKey').addEventListener('keypress', function(e) {
     if (e.key === 'Enter') {
-      document.getElementById('saveLicenseBtn').click();
+        document.getElementById('saveLicenseBtn').click();
     }
-  });
+});
 }
 
 // Helper functions from utils (duplicated for popup scope)
